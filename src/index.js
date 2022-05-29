@@ -71,11 +71,9 @@ function decode(expr) {
     let exprArray = [];
 
     for (let i = 0; i < expr.length; i += 10) {
-        exprArray.push(expr.substring(i, i + 10));
-    }
+        const number = expr.substring(i, i + 10);
 
-    const numbersToSymbol = (number) => {
-        if (number === '**********') return ' ';
+        if (number === '**********') exprArray.push(' ');
         let morse = '';
         for (let i = 0; i < 10; i += 2) {
             const rule = {
@@ -84,10 +82,10 @@ function decode(expr) {
             }
             morse += rule[number.toString().substring(i, i + 2)] || '';
         }
-        return MORSE_TABLE[morse];
+        exprArray.push(MORSE_TABLE[morse]);
     }
 
-    return exprArray.map(numbersToSymbol).join('');
+    return exprArray.join('');
 }
 
 module.exports = {
