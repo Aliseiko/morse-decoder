@@ -74,30 +74,20 @@ function decode(expr) {
         exprArray.push(expr.substring(i, i + 10));
     }
 
-    const numbersToMorse = (number) => {
+    const numbersToSymbol = (number) => {
         if (number === '**********') return ' ';
         let morse = '';
         for (let i = 0; i < 10; i += 2) {
-            if (number.toString().substring(i, i + 2) === '10') {
-                morse += '.';
+            const rule = {
+                '10': '.',
+                '11': '-',
             }
-            if (number.toString().substring(i, i + 2) === '11') {
-                morse += '-';
-            }
+            morse += rule[number.toString().substring(i, i + 2)] || '';
         }
-        return morse;
-    }
-
-    const morseArray = exprArray.map(numbersToMorse);
-
-    const morseToSymbol = (morse) => {
-        if (morse === ' ') return ' ';
         return MORSE_TABLE[morse];
     }
 
-    const symbolsArray = morseArray.map(morseToSymbol);
-
-    return symbolsArray.join('');
+    return exprArray.map(numbersToSymbol).join('');
 }
 
 module.exports = {
