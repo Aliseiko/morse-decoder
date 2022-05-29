@@ -68,12 +68,16 @@ function decode(expr) {
 }*/
 
 function decode(expr) {
-    let exprArray = [];
+    let result = '';
 
     for (let i = 0; i < expr.length; i += 10) {
         const number = expr.substring(i, i + 10);
 
-        if (number === '**********') exprArray.push(' ');
+        if (number === '**********') {
+            result += ' ';
+            continue;
+        }
+
         let morse = '';
         for (let i = 0; i < 10; i += 2) {
             const rule = {
@@ -82,10 +86,10 @@ function decode(expr) {
             }
             morse += rule[number.toString().substring(i, i + 2)] || '';
         }
-        exprArray.push(MORSE_TABLE[morse]);
+        result +=  MORSE_TABLE[morse];
     }
 
-    return exprArray.join('');
+    return result;
 }
 
 module.exports = {
